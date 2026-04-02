@@ -153,6 +153,15 @@ Indexes on `userId`, `type`, `category`, `date`, and `deletedAt` because:
 
 The application validates all environment variables against a Zod schema before starting. If any required variable is missing or invalid, the process exits immediately with a clear error message. This implements the **fail-fast principle** — never let the app start silently misconfigured.
 
+### 8. The Deliberate Choice of SQLite
+
+While PostgreSQL is the industry standard for production, **SQLite was deliberately chosen for this specific project** to optimize the reviewer experience. 
+
+* **Zero-Friction Evaluation**: Implementing PostgreSQL means reviewers must install Postgres locally, spin up Docker containers, or create cloud database accounts just to test the code. With SQLite, the setup is entirely frictionless: `npm install` → `npx prisma migrate dev` → `npm run dev`. Done.
+* **The Power of Abstraction**: Because the application relies on the Prisma ORM, the underlying database layer is fully abstracted. Swapping SQLite for PostgreSQL in a production environment is literally a one-line change in `schema.prisma` (`provider = "postgresql"`). This demonstrates an understanding of the abstraction layer without enforcing unnecessary lock-in.
+
+PostgreSQL genuinely outshines SQLite when an application demands concurrent writes, full-text search, JSON column operators, or horizontal scaling. However, for a demonstration assessment utilizing seed data, none of these bottlenecks apply.
+
 ## Assumptions Made
 
 - **ANALYST** can create and update transactions, but can only update their own records (not other users'). ADMIN can update any record.

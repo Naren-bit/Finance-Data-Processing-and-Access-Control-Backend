@@ -104,7 +104,28 @@ When selecting the stack, the primary considerations were **predictability (type
 
 ---
 
-## 3. Uniqueness of the Design
+## 3. Infrastructure Tradeoffs: The Deliberate Choice of SQLite
+
+> [!IMPORTANT]
+> **Why SQLite over PostgreSQL?**
+>
+> While PostgreSQL is the industry standard for production, **SQLite was deliberately chosen for this specific project** to optimize the reviewer experience. 
+>
+> **1. Zero-Friction Evaluation**
+> Implementing PostgreSQL means reviewers must install Postgres locally, spin up Docker containers, or create cloud database accounts just to test the code. If any of that infrastructure fails, the focus shifts from reviewing business logic to debugging database connections. With SQLite, the setup is entirely frictionless:
+> `npm install` → `npx prisma migrate dev` → `npm run dev`. Done.
+>
+> **2. The Power of Abstraction (Prisma ORM)**
+> Because the application relies on the Prisma ORM, the underlying database layer is fully abstracted. Swapping SQLite for PostgreSQL in a production environment is literally a one-line change in `schema.prisma` (`provider = "postgresql"`) alongside a modified `DATABASE_URL`. This demonstrates an understanding of the abstraction layer without enforcing unnecessary lock-in.
+>
+> **3. Using the Right Tool for the Scope**
+> PostgreSQL genuinely outshines SQLite when an application demands concurrent writes (SQLite locks the entire file on write), full-text search, JSON column operators, or horizontal scaling. However, for a demonstration assessment utilizing seed data, none of these bottlenecks apply. 
+>
+> *Note: In a true high-scale production deployment, the natural progression would be to swap the Prisma provider to PostgreSQL and move the refresh token storage from the relational DB into an in-memory datastore like Redis.*
+
+---
+
+## 4. Uniqueness of the Design
 
 The application implements several advanced software engineering patterns that elevate it beyond a standard CRUD API.
 
@@ -128,7 +149,7 @@ Error handling is not scattered across the controllers. If an entity is not foun
 
 ---
 
-## 4. Challenges Faced & Solutions
+## 5. Challenges Faced & Solutions
 
 During the development of the API, several interesting technical challenges were encountered and resolved.
 
@@ -167,7 +188,7 @@ When the access token expires, the client uses the refresh token to get a new pa
 
 ---
 
-## 5. Interactive API Documentation (Swagger)
+## 6. Interactive API Documentation (Swagger)
 
 A major feature of this backend is the built-in, native interactive API documentation. Instead of maintaining external Postman collections that fall out of sync, the application uses **Swagger (OpenAPI)** via JSDoc annotations placed directly above the controller code.
 
@@ -177,6 +198,6 @@ A major feature of this backend is the built-in, native interactive API document
 
 ---
 
-## 6. Conclusion
+## 7. Conclusion
 
 This backend was constructed with production-grade sensibilities. Security (token rotation, rate-limiting, Helmet headers), accuracy (Prisma Decimals, Soft Deletes), and code-cleanliness (Layered Architecture, Dependency Injection-friendly services) were prioritized over building a massive, untested monolith. The result is a robust core that is ready to scale.
