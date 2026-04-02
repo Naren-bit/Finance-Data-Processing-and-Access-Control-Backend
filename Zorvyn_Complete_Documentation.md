@@ -51,18 +51,18 @@ flowchart TD
     end
 
     %% Map the relationships (The Flow)
-    Client -- "HTTP Request" --> GlobalMid
+    Client -->|"HTTP Request"| GlobalMid
     GlobalMid --> Router
-    Router -- "Unprotected Route" --> Controllers
-    Router -- "Protected Route" --> AuthMid
-    AuthMid -- "Valid Token" --> RBACMid
-    RBACMid -- "Has Permission" --> Controllers
+    Router -->|"Unprotected Route"| Controllers
+    Router -->|"Protected Route"| AuthMid
+    AuthMid -->|"Valid Token"| RBACMid
+    RBACMid -->|"Has Permission"| Controllers
     
-    Controllers -- "Throws Error" -.-> GlobalErr
-    AuthMid -. "Invalid Token" .-> GlobalErr
-    RBACMid -. "Forbidden" .-> GlobalErr
+    Controllers -.->|"Throws Error"| GlobalErr
+    AuthMid -.->|"Invalid Token"| GlobalErr
+    RBACMid -.->|Forbidden| GlobalErr
     
-    Controllers -- "Calls Method" --> Business Logic
+    Controllers -->|"Calls Method"| Business Logic
     
     Auth <--> Prisma
     User <--> Prisma
@@ -71,8 +71,8 @@ flowchart TD
     
     Prisma <--> SQLite
     
-    GlobalErr -. "JSON Error Response" .-> Client
-    Controllers -- "JSON Response" --> Client
+    GlobalErr -.->|"JSON Error Response"| Client
+    Controllers -->|"JSON Response"| Client
 ```
 
 ### Request Flow Explanation
