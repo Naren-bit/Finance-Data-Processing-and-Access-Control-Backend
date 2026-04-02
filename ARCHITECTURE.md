@@ -12,7 +12,7 @@ flowchart TD
     Client((Client App / Browser))
 
     %% Define Node.js Express Layer
-    subgraph Express Application [Express.js Backend Server]
+    subgraph ExpressApp [Express.js Backend Server]
         direction TB
         
         %% Global Middlewares
@@ -29,7 +29,7 @@ flowchart TD
         Controllers["API Controllers<br>- Validates input via Zod<br>- Formats API responses"]
         
         %% Services (Business Logic)
-        subgraph Business Logic [Service Layer]
+        subgraph BusinessLogic [Service Layer]
             Auth[Auth Service]
             User[Users Service]
             Tx[Transactions Service]
@@ -41,7 +41,7 @@ flowchart TD
     end
 
     %% Define Database Layer
-    subgraph Database Layer [Persistence]
+    subgraph DatabaseLayer [Persistence]
         Prisma[(Prisma ORM)]
         SQLite[(SQLite Database)]
     end
@@ -58,7 +58,7 @@ flowchart TD
     AuthMid -.->|"Invalid Token"| GlobalErr
     RBACMid -.->|Forbidden| GlobalErr
     
-    Controllers -->|"Calls Method"| Business Logic
+    Controllers -->|"Calls Method"| BusinessLogic
     
     Auth <--> Prisma
     User <--> Prisma
