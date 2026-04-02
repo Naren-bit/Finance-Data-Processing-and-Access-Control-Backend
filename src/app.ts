@@ -33,8 +33,8 @@ const swaggerOptions: swaggerJsdoc.Options = {
     },
     servers: [
       {
-        url: `http://localhost:${env.PORT}`,
-        description: 'Development server',
+        url: '/',
+        description: 'Current Environment (Auto-detected)',
       },
     ],
     components: {
