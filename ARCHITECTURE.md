@@ -16,28 +16,28 @@ flowchart TD
         direction TB
         
         %% Global Middlewares
-        GlobalMid[Global Middleware\n- Helmet, CORS\n- Morgan Logger\n- Global Rate Limiter]
+        GlobalMid["Global Middleware<br>- Helmet, CORS<br>- Morgan Logger<br>- Global Rate Limiter"]
         
         %% Router
         Router{Express Router}
         
         %% Route Specific Middlewares
-        AuthMid[Auth Middleware\n- Validates JWT\n- Fetches User]
-        RBACMid[RBAC Middleware\n- requireRole() check]
+        AuthMid["Auth Middleware<br>- Validates JWT<br>- Fetches User"]
+        RBACMid["RBAC Middleware<br>- requireRole() check"]
         
         %% Controllers
-        Controllers[API Controllers\n- Validates input via Zod\n- Formats API responses]
+        Controllers["API Controllers<br>- Validates input via Zod<br>- Formats API responses"]
         
         %% Services (Business Logic)
         subgraph Business Logic [Service Layer]
             Auth[Auth Service]
             User[Users Service]
             Tx[Transactions Service]
-            Dash[Analytics & Dashboard\nService]
+            Dash["Analytics & Dashboard<br>Service"]
         end
         
         %% Error Handler
-        GlobalErr[Global Error Handler\n- Catches Exceptions\n- Formats proper HTTP status]
+        GlobalErr["Global Error Handler<br>- Catches Exceptions<br>- Formats proper HTTP status"]
     end
 
     %% Define Database Layer
