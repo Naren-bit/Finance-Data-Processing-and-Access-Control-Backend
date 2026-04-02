@@ -167,6 +167,16 @@ When the access token expires, the client uses the refresh token to get a new pa
 
 ---
 
-## 5. Conclusion
+## 5. Interactive API Documentation (Swagger)
+
+A major feature of this backend is the built-in, native interactive API documentation. Instead of maintaining external Postman collections that fall out of sync, the application uses **Swagger (OpenAPI)** via JSDoc annotations placed directly above the controller code.
+
+* When running locally (`npm run dev`), the documentation is accessible via the browser at: **`http://localhost:3000/api-docs`**
+* It provides a visual interface for developers to see expected JSON payloads, HTTP verbs, and possible error responses for every endpoint.
+* It includes an **Authorize** function, allowing users to paste a valid JWT and test endpoints directly from the documentation UI.
+
+---
+
+## 6. Conclusion
 
 This backend was constructed with production-grade sensibilities. Security (token rotation, rate-limiting, Helmet headers), accuracy (Prisma Decimals, Soft Deletes), and code-cleanliness (Layered Architecture, Dependency Injection-friendly services) were prioritized over building a massive, untested monolith. The result is a robust core that is ready to scale.
