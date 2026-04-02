@@ -62,7 +62,7 @@ const swaggerOptions: swaggerJsdoc.Options = {
 
 const swaggerSpec = swaggerJsdoc(swaggerOptions);
 
-// Serve Swagger UI — available in all environments for evaluation convenience
+// Serve Swagger UI — available in all environments for API documentation convenience
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
   customCss: '.swagger-ui .topbar { display: none }',
   customSiteTitle: 'Zorvyn Finance Dashboard API Docs',

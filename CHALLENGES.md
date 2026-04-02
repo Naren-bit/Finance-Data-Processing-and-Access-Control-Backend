@@ -22,7 +22,7 @@ This allowed the database to perform the heavy lifting of the aggregation, retur
 ## 2. Multi-Tenant Data Scoping (Role-Based Filtering)
 
 **The Challenge:**
-Implementing Role-Based Access Control (RBAC) at the route level (e.g., "Only Admins can hit this endpoint") is straightforward. However, the assignment required *data-level* scoping — a VIEWER can hit the `GET /transactions` endpoint, but they must *only* see their own data, whereas an ANALYST hitting the exact same endpoint should see *all* data. 
+Implementing Role-Based Access Control (RBAC) at the route level (e.g., "Only Admins can hit this endpoint") is straightforward. However, the system required *data-level* scoping — a VIEWER can hit the `GET /transactions` endpoint, but they must *only* see their own data, whereas an ANALYST hitting the exact same endpoint should see *all* data. 
 
 **The Solution:**
 I solved this by keeping the Controller completely unaware of the data scoping logic. The Controller simply passes the user's ID and Role down to the Service layer. Inside the Service layer, I dynamically construct the Prisma `where` clause:

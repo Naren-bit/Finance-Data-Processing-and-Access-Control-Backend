@@ -14,7 +14,7 @@ When selecting the stack, the primary considerations were **predictability (type
 | **Node.js (Express)** | Chose Express over NestJS or fastify. While NestJS provides great out-of-the-box structure, Express is unopinionated. Building a structured layer-by-layer architecture from scratch in Express demonstrates a deep understanding of design patterns, middleware composition, and request lifecycles rather than relying on framework magic. |
 | **TypeScript** | Crucial for a financial application. Catching type mismatches (e.g., treating a string as a monetary value) at compile-time rather than runtime is a requirement for modern backend systems. |
 | **Prisma ORM** | Chose Prisma over TypeORM or Sequelize. Prisma generates a type-safe database client dynamically based on the schema. This removes the "impedance mismatch" between database joins and TypeScript objects, leading to extremely fast and safe database interactions. |
-| **SQLite** | Required for simplicity of the evaluation. It requires zero setup or Docker configuration from the reviewer. However, thanks to Prisma, the entire backend can be migrated to PostgreSQL in minutes simply by changing the schema provider line. |
+| **SQLite** | Selected for deployment simplicity. It requires zero setup or Docker configuration to run locally. However, thanks to Prisma, the entire backend can be migrated to PostgreSQL in minutes simply by changing the schema provider line. |
 | **Zod** | Chose Zod over Joi or class-validator for input validation. Zod allows us to define runtime validation schemas that natively infer static TypeScript types, keeping our boundaries clean and our types DRY (Don't Repeat Yourself). |
 
 ---

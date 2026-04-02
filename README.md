@@ -18,7 +18,7 @@ This system serves as the backend for a personal finance dashboard, enabling use
 |-----------|-----|
 | **Node.js + TypeScript** | Type safety catches bugs at compile time, not runtime. TypeScript interfaces enforce contracts between layers. |
 | **Express** | Minimal, unopinionated — structure comes from the team, not the framework. Middleware composition is powerful and explicit. |
-| **Prisma + SQLite** | Prisma gives type-safe queries and a migration history; SQLite means zero setup for the evaluator (no Docker, no cloud DB account needed). |
+| **Prisma + SQLite** | Prisma gives type-safe queries and a migration history; SQLite means zero local setup (no Docker, no cloud DB account needed). |
 | **Zod** | Runtime validation at the API boundary — TypeScript types alone don't protect against bad HTTP input from network requests. |
 | **Jest + ts-jest** | Confidence that role logic, business rules, and auth flows actually work. Unit tests with mocked Prisma client for fast, isolated testing. |
 | **JWT (access + refresh)** | Stateless auth for API requests. Short-lived access tokens (15m) paired with long-lived, rotated refresh tokens limit attack surface. |
@@ -160,7 +160,7 @@ The application validates all environment variables against a Zod schema before 
 - **Dashboard summary** for VIEWERs is scoped to their own transactions; ANALYSTs and ADMINs see all users' data.
 - **Date validation** allows up to 1 year in the future (for scheduled/future transactions) but rejects clearly invalid dates.
 - **Refresh tokens** are stored in the database (not Redis) for simplicity; in production, Redis would reduce DB load.
-- **SQLite** is used for zero-setup evaluation; the architecture supports migration to PostgreSQL with minimal code changes.
+- **SQLite** is used for zero-setup local deployment; the architecture supports migration to PostgreSQL with minimal code changes.
 
 ## What Would Change in Production
 
